@@ -13,7 +13,8 @@
     <header>
         <div class="header-main">
             <img class="logo" src="img/logo.png" alt="">
-            <a class="btn-1" href="#">Admin</a>
+            <!-- <a class="btn-2">Multiple Images </a> -->
+            <a class="btn-1" href="multi-images.html">Multiple-Images</a>
         </div>
     </header>
 
@@ -49,18 +50,55 @@
                                 </div>
                                 
                         </div>
+                        
                     </div>
 
                     </div>
                     <div class="creator-options-sub">
+                        <div class="creator-option-1 flex-direction-column">
+                            <span class="options-label-text">AI Image Generator</span>
+                            <div class="input-with-button">
+                                <input type="text" class="input-field no-border" id="aiPromptInput" placeholder="Enter your Prompt here">
+                                <button id="generateImageBtn" class="btn-1">Generate</button>
+                            </div>
+                        </div>
                         
                         <div class="creator-option-1 flex-direction-column">
                             <span class="options-label-text">Enter Heading Text</span>
                             <input type="text" class="input-field" id="headingInput"
                                 placeholder="Enter your Business Idea">
                         </div>
+                        
                     </div>
                     <div class="creator-options-sub" id="bulletPointsContainer">
+                        <div class="creator-option-1 flex-direction-column bullet-point">
+                            <span class="options-label-text">Bullet Point</span>
+                            <div class="input-with-delete">
+                                <input type="text" class="input-field bullet-input" placeholder="Bullet Points">
+                                <img class="delete-bullet" src="img/delete.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="creator-option-1 flex-direction-column bullet-point">
+                            <span class="options-label-text">Bullet Point</span>
+                            <div class="input-with-delete">
+                                <input type="text" class="input-field bullet-input" placeholder="Bullet Points">
+                                <img class="delete-bullet" src="img/delete.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="creator-option-1 flex-direction-column bullet-point">
+                            <span class="options-label-text">Bullet Point</span>
+                            <div class="input-with-delete">
+                                <input type="text" class="input-field bullet-input" placeholder="Bullet Points">
+                                <img class="delete-bullet" src="img/delete.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="creator-option-1 flex-direction-column bullet-point">
+                            <span class="options-label-text">Bullet Point</span>
+                            <div class="input-with-delete">
+                                <input type="text" class="input-field bullet-input" placeholder="Bullet Points">
+                                <img class="delete-bullet" src="img/delete.svg" alt="">
+                            </div>
+                        </div>
                         <div class="creator-option-1 flex-direction-column bullet-point">
                             <span class="options-label-text">Bullet Point</span>
                             <div class="input-with-delete">
@@ -122,6 +160,22 @@
                                         <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
                                         <span class="bullet-point-text">Bullet Points</span>
                                     </div>
+                                    <div class="bullet-points-sub">
+                                        <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
+                                        <span class="bullet-point-text">Bullet Points</span>
+                                    </div>
+                                    <div class="bullet-points-sub">
+                                        <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
+                                        <span class="bullet-point-text">Bullet Points</span>
+                                    </div>
+                                    <div class="bullet-points-sub">
+                                        <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
+                                        <span class="bullet-point-text">Bullet Points</span>
+                                    </div>
+                                    <div class="bullet-points-sub">
+                                        <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
+                                        <span class="bullet-point-text">Bullet Points</span>
+                                    </div>
                                 </div>
                             </div>
                             <span class="preview-footer-text" id="previewFooter">Please Follow this page for more
@@ -141,6 +195,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/ai.js"></script>
 </body>
 
 </html>

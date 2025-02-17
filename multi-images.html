@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Image Generator</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="img/favicon.svg" type="image/x-icon">
+</head>
+
+<body>
+    <header>
+        <div class="header-main">
+            <img class="logo" src="img/logo.png" alt="">
+            <a class="btn-1" href="index.html">Back to Main</a>
+        </div>
+    </header>
+
+    <section>
+        <div class="image-creator-main">
+            <span class="image-hd-text">Excel Image Generator</span>
+            <div class="creator-options-div">
+                <!-- Excel Upload Section -->
+                <div class="creator-options-sub">
+                    <span class="options-label-text">Upload Excel File</span>
+                    <div class="options-div" id="uploadExcelBtn">
+                        <div class="active-option">
+                            <img src="img/upload.svg" alt="">
+                            Upload Excel File
+                            <input type="file" id="excelUpload" accept=".xlsx, .xls" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Indicator -->
+                <div class="creator-options-sub">
+                    <span class="options-label-text">Progress</span>
+                    <div id="progressIndicator">0%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-main">
+            <p>&copy; 2025 Copyrights. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Include SheetJS for Excel parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Include the Excel-specific JavaScript file -->
+    <script src="js/excel.js"></script>
+</body>
+
+</html>

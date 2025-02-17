@@ -38,6 +38,39 @@ header {
     color: #fff;
     text-decoration: none;
     border-radius: 10px;
+    outline: none !important;
+    border: none !important;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+
+}
+
+.btn-1:hover {
+    background-color: #303030;
+    border-radius: 0;
+}
+.btn-1:active {
+    transform: scale(0.98);
+}
+.btn-2:hover {
+    background-color: #F2f2f2;
+    border-radius: 0;
+}
+.btn-2:active {
+    transform: scale(0.98);
+}
+
+.btn-2 {
+    font-size: 16px;
+    padding: 10px 24px;
+    background-color: transparent;
+    color: #000;
+    text-decoration: none;
+    border-radius: 10px;
+    outline: none !important;
+    border: none !important;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
 }
 
 .image-creator-main {
@@ -132,6 +165,8 @@ header {
     font-weight: 600;
     line-height: normal;
     cursor: pointer;
+    transform: scale3d(1, 1, 1);
+
 }
 
 .disable-option {
@@ -149,7 +184,25 @@ header {
     font-weight: 400;
     line-height: normal;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    transform: scale3d(1, 1, 1);
+
 }
+
+.disable-option:hover {
+    background-color: #E9E9E9;
+}
+
+.disable-option:active {
+    transform: scale3d(0.98, 0.98, 0.98);
+}
+.active-option:hover {
+    background-color: #f9f9f9;
+}
+.active-option:active {
+    transform: scale3d(0.98, 0.98, 0.98);
+}
+
 
 .input-field {
     display: flex;
@@ -165,6 +218,14 @@ header {
     color: #333;
     outline: none;
     width: -webkit-fill-available;
+    transition: all .2s ease-in-out;
+}
+
+
+.input-field:focus {
+    border-color: #000000;
+    box-shadow: 0 0 0 3px #00000033;
+    outline: none;
 }
 
 .live-preview-main {
@@ -324,6 +385,31 @@ footer {
     /* Example styling */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     /* Example styling */
+}
+
+#generateImageBtn {
+    background: linear-gradient(475deg, #8A3AE2, #FF1E93, #FF0000, #00BFFF) !important; /* Green color for AI button */
+    margin: 4px;
+    border-radius: 6px;
+}
+
+#previewImage {
+    max-width: 100%;
+
+}
+
+
+.input-with-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid #D2d2d2;
+    border-radius: 10px;
+}
+
+
+.no-border {
+    border: none  !important;
 }
 
 
