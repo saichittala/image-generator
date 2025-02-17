@@ -388,7 +388,7 @@ footer {
 }
 
 #generateImageBtn {
-    background: linear-gradient(475deg, #8A3AE2, #FF1E93, #FF0000, #00BFFF) !important; /* Green color for AI button */
+    background: linear-gradient(288deg,#0894FF,#C959DD 34%,#FF2E54 68%,#FF9004);
     margin: 4px;
     border-radius: 6px;
 }
