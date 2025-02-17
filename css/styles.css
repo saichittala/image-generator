@@ -348,7 +348,7 @@ footer {
     }
     .creator-option-1 {
         width: -webkit-fill-available;
-        flex-direction: column;
+        flex-direction: column !important;
     }
     header {
         width: 100%;
