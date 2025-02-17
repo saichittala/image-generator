@@ -353,6 +353,9 @@ footer {
     }
     .creator-option-1 {
         width: -webkit-fill-available;
+        flex: unset !important;
+        flex-wrap: unset !important;
+        flex-direction: column !important;
     }
     header {
         width: 100%;
