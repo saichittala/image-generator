@@ -309,6 +309,9 @@ footer {
     margin-top: 20px;
 }
 
+.flex-direction-column {
+    flex-direction: column;
+}
 .logo-in-preview {
     /* Style for the logo in the preview */
     /* position: absolute;  Already set in JS */
@@ -350,7 +353,6 @@ footer {
     }
     .creator-option-1 {
         width: -webkit-fill-available;
-        flex-direction: column !important;
     }
     header {
         width: 100%;
