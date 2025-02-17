@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Generator</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="img/favicon.svg" type="image/x-icon">
+</head>
+
+<body>
+    <header>
+        <div class="header-main">
+            <img class="logo" src="img/logo.png" alt="">
+            <a class="btn-1" href="#">Admin</a>
+        </div>
+    </header>
+
+    <section>
+        <div class="image-creator-main">
+            <span class="image-hd-text">Image-Generator</span>
+            <div class="creator-options-div">
+                <div class="creator-options-main">
+                    <div class="creator-options-sub">
+                        <div class="creator-option-1">
+                            <span class="options-label-text">Type of Social Media</span>
+                            <div class="options-div" id="socialMedia">
+                                <div class="active-option" data-value="instagram">Instagram</div>
+                                <div class="disable-option" data-value="youtube">YouTube</div>
+                                <div class="disable-option" data-value="facebook">Facebook</div>
+                            </div>
+                        </div>
+                        <!-- <div class="creator-option-1">
+                            <span class="options-label-text">Aspect Ratio</span>
+                            <div class="options-div" id="aspectRatio">
+                                <div class="active-option" data-value="1:1">1:1</div>
+                                <div class="disable-option" data-value="16:9">16:9</div>
+                                <div class="disable-option" data-value="4:5">4:5</div>
+                            </div>
+                        </div> -->
+                        <div class="creator-option-1">
+                            <span class="options-label-text">Upload Image</span>
+                            <div class="options-div " id="uploadImageBtn">
+                                <div class="active-option">
+                                    <img src="img/upload.svg" alt="">
+                                Upload Here
+                            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                                </div>
+                                
+                        </div>
+                    </div>
+
+                    </div>
+                    <div class="creator-options-sub">
+                        
+                        <div class="creator-option-1">
+                            <span class="options-label-text">Enter Heading Text</span>
+                            <input type="text" class="input-field" id="headingInput"
+                                placeholder="Enter your Business Idea">
+                        </div>
+                    </div>
+                    <div class="creator-options-sub" id="bulletPointsContainer">
+                        <div class="creator-option-1 bullet-point">
+                            <span class="options-label-text">Bullet Point</span>
+                            <div class="input-with-delete">
+                                <input type="text" class="input-field bullet-input" placeholder="Bullet Points">
+                                <img class="delete-bullet" src="img/delete.svg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="creator-options-sub">
+                        <div class="creator-option-1">
+                            <div class="options-div">
+                                <div class="active-option" id="addBulletBtn">
+                                    <img src="img/add.svg" alt="">
+                                    Add Extra Point
+                                </div>
+                            </div>
+                        </div>
+                        <div class="creator-option-1">
+                            <div class="options-div">
+                                <div class="active-option" id="toggleCheckboxesBtn">
+                                    <img src="img/checkbox-btn.svg" alt="">
+                                    Show checkboxes
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="creator-options-sub">
+                        <div class="creator-option-1">
+                            <span class="options-label-text">Footer Text</span>
+                            <input type="text" class="input-field" id="footerInput"
+                                placeholder="Please Follow this page for more content">
+                        </div>
+                    </div>
+                    <div class="creator-options-sub">
+                        
+                        <div class="creator-option-1">
+                            <span class="options-label-text">Quality</span>
+                            <div class="options-div" id="qualityOptions">
+                                <div class="active-option" data-value="hd">HD</div>
+                                <div class="disable-option" data-value="2k">2K</div>
+                                <div class="disable-option" data-value="4k">4K</div>
+                                <div class="disable-option" data-value="8k">8K</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button id="downloadBtn" class="btn-1">Download Image</button>
+
+                </div>
+                <div class="live-preview-main">
+                    <span class="preview-text">Live Preview</span>
+                    <div class="preview-image-main" id="previewContainer">
+                        <img class="preview-img" id="previewImage" src="img/Rectangle 7.png" alt="">
+                        <div class="img-content-main">
+                            <div class="img-content-sub">
+                                <span class="heading-text" id="previewHeading">Enter your Business Name</span>
+                                <div class="bullet-points-main" id="previewBulletPoints">
+                                    <div class="bullet-points-sub">
+                                        <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
+                                        <span class="bullet-point-text">Bullet Points</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="preview-footer-text" id="previewFooter">Please Follow this page for more
+                                content</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-main">
+            <p>&copy; 2025 Copyrights. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
