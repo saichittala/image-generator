@@ -445,7 +445,6 @@ footer {
     height: 45%;
     overflow-y: auto;
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.12), 0px 0px 24px rgba(0, 0, 0, 0.12);
-    padding-top: 28px;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -472,6 +471,7 @@ footer {
     border-radius: 5px;
     transition: transform 0.5s ease-in-out;
     aspect-ratio: 1;
+    border: 1px solid #d2d2d2;
 }
 
 .modal-image:hover {
@@ -480,17 +480,20 @@ footer {
 }
 
 .close-modal {
-    position: absolute;
-    top: 24px;
-    right: 18px;
+    position: sticky;
+    top: 40%;
+    left: 57.3%;
     font-size: 24px;
     cursor: pointer;
     width: 32px;
     height: 32px;
-    border: 1px solid transparent;
+    border: 1px solid #D2d2d2;
     transform: scale(1);
-
     transition: all 0.2s ease-in-out;
+    border-radius: 10px;
+    z-index: 1000000;
+    mix-blend-mode: luminosity;
+    background-color: #ffffff;
 }
 
 .close-modal:hover {
@@ -499,6 +502,68 @@ footer {
 
 .close-modal:active {
     transform: scale(0.96);
+}
+
+
+.image-source-btn.active {
+    display: flex;
+    padding: 8px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex: 1 0 0;
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    transform: scale3d(1, 1, 1);
+    outline: none !important;
+    border: none !important;
+}
+
+.image-source-btn {
+    display: flex;
+    padding: 8px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex: 1 0 0;
+    border-radius: 10px;
+    color: #606060;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    transform: scale3d(1, 1, 1);
+    outline: none !important;
+    border: none !important;
+}
+
+
+.image-source-btn:hover {
+    background-color: #E9E9E9;
+}
+
+.image-source-btn:active {
+    transform: scale3d(0.98, 0.98, 0.98);
+}
+
+.image-source-btn.active:hover {
+    background-color: #f9f9f9;
+}
+
+.image-source-btn.active:active {
+    transform: scale3d(0.98, 0.98, 0.98);
 }
 
 
@@ -561,5 +626,9 @@ footer {
     .modal-content {
         width: 80%;
         height: 45%;
+    }
+    .close-modal {
+        top: 31%;
+        left: 83.5%;
     }
 }

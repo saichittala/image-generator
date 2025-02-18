@@ -10,17 +10,24 @@
 </head>
 
 <body>
-    <!-- Image Selection Modal -->
-    <div id="imageSelectionModal" class="modal">
-        <div class="modal-content">
-            <div style="display: flex; justify-content: space-between;">
-                <span style="margin-bottom: 24px; font-size: 20px; font-weight: 600;">Generated Images</span>
-                <img class="close-modal" src="img/close.svg" alt="Close"
-                    onclick="document.getElementById('imageSelectionModal').style.display='none'">
+<!-- Image Selection Modal -->
+<div id="imageSelectionModal" class="modal">
+    <img class="close-modal" src="img/close.svg" alt="Close"
+        onclick="document.getElementById('imageSelectionModal').style.display='none'">
+    <div class="modal-content">
+        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+            <span style="margin-bottom:14px; font-size: 20px; font-weight: 600;">Generated Images</span>
+            <div class="options-div" style="margin-bottom: 18px;">
+                <button id="pixabayBtn" class="image-source-btn active">Pixabay</button>
+                <button id="unsplashBtn" class="image-source-btn">Unsplash</button>
             </div>
-            <div id="modalImages" class="modal-images-container"></div>
+        </div>
+        <div id="modalImages" class="modal-images-container"></div>
+        <div class="options-div" style="margin-top: 12px;">
+            <button class="active-option" style="outline: none !important; border: none !important;" id="loadMoreBtn" style="display: none; margin-top: 10px;">Load More</button> <!-- Load More Button -->
         </div>
     </div>
+</div>
 
     <header>
         <div class="header-main">
@@ -212,7 +219,7 @@
                 </div>
 
             </div>
-            
+
         </div>
     </section>
 
