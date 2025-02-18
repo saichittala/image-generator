@@ -448,7 +448,8 @@ footer {
     position: absolute;
     cursor: grab;
     /* Scrollbar Styles */
-    scrollbar-width: thin;  /* For Firefox */
+    scrollbar-width: thin;
+    /* For Firefox */
 }
 
 
@@ -545,5 +546,15 @@ footer {
     header {
         width: 100%;
         display: flex;
+    }
+
+    .modal {
+        left: 5%;
+        top: 25%;
+    }
+
+    .modal-content {
+        width: 80%;
+        height: 30%;
     }
 }
