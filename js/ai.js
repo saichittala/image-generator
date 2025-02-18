@@ -116,3 +116,30 @@ function resetPageAndFetchImages(query) {
     fetchImages(query);
 }
 
+function enableEdit(elementId) {
+    const element = document.getElementById(elementId);
+    
+    // Make the text content editable on single click
+    element.setAttribute('contenteditable', 'true');
+    
+    // Focus on the element to start editing
+    element.focus();
+    
+    // Add a style to make it visually obvious it's editable
+    element.style.outline = '1px solid #000000'; // Change the outline color (optional)
+
+    // When the element loses focus, save the edited text
+    element.addEventListener('blur', function() {
+        element.style.outline = ''; // Remove the outline
+        element.setAttribute('contenteditable', 'false'); // Disable editing
+    });
+
+    // Optional: When Enter is pressed, save the text and remove the outline
+    element.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            element.blur(); // Trigger blur to save the changes
+        }
+    });
+}
+
+

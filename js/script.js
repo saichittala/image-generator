@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
             newPreviewBullet.className = 'bullet-points-sub';
             newPreviewBullet.innerHTML = `
                 <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                <span class="bullet-point-text">Bullet Points</span>
+                <span class="bullet-point-text" id="previewBulletPoints" onclick="enableEdit('previewBulletPoints')">Bullet Points</span>
             `;
             previewBulletPoints.appendChild(newPreviewBullet);
 
