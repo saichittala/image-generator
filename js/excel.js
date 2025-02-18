@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         canvas.height = 1920;
 
         // Add background color or image
+        ctx.height = '261px';
         ctx.fillStyle = '#ffffff'; // White background
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 

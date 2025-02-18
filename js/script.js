@@ -101,8 +101,6 @@ document.addEventListener('DOMContentLoaded', function () {
         qualityOptions.addEventListener('click', function (event) {
             const selectedQuality = event.target.dataset.value;
             qualityScale = { 'hd': 1, '2k': 2, '4k': 4, '8k': 8 }[selectedQuality] || 1;
-
-            // Update any UI elements here to reflect the selected quality, if needed
             console.log(`Selected quality: ${selectedQuality}, scale: ${qualityScale}`);
         });
     }
@@ -112,32 +110,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (downloadBtn && previewContainer) {
         downloadBtn.addEventListener('click', function () {
+            // Force reflow to ensure DOM updates are captured
+            document.body.clientHeight;
+
             const containerWidth = previewContainer.offsetWidth;
             const containerHeight = previewContainer.offsetHeight;
 
-            // Calculate the required height for 9:16 aspect ratio
             const targetHeight = containerWidth * (16 / 9);
+            previewContainer.style.transform = `scale(${qualityScale})`;
+            previewContainer.style.height = `${targetHeight / qualityScale}px`;
 
-            // Scale the content inside previewContainer
-            previewContainer.style.transform = `scale(${qualityScale})`;  // Scale the content inside
-
-            // Adjust the previewContainer's size to ensure 9:16 ratio
-            previewContainer.style.height = `${targetHeight / qualityScale}px`;  // Adjust for scale
-
-            // Generate the image with the adjusted resolution
             html2canvas(previewContainer, {
-                width: containerWidth * qualityScale,  // Adjust width with quality scale
-                height: targetHeight * qualityScale,   // Adjust height with quality scale to maintain aspect ratio
-                scale: qualityScale                    // Use the scale factor for high resolution
+                width: containerWidth * qualityScale,
+                height: targetHeight * qualityScale,
+                scale: qualityScale,
+                useCORS: true,
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'Generated-IMG.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
 
-                // Reset the preview container's height to the original
                 previewContainer.style.height = `${containerHeight}px`;
-                previewContainer.style.transform = `scale(1)`; // Reset scale
+                previewContainer.style.transform = 'scale(1)';
             });
         });
     }

@@ -10,6 +10,17 @@
 </head>
 
 <body>
+    <!-- Image Selection Modal -->
+    <div id="imageSelectionModal" class="modal">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between;">
+                <span style="margin-bottom: 24px; font-size: 20px; font-weight: 600;">Generated Images</span>
+                <img class="close-modal" src="img/close.svg" alt="Close" onclick="document.getElementById('imageSelectionModal').style.display='none'">
+            </div>
+            <div id="modalImages" class="modal-images-container"></div>
+        </div>
+    </div>
+
     <header>
         <div class="header-main">
             <img class="logo" src="img/logo.png" alt="">
@@ -58,7 +69,7 @@
                         <div class="creator-option-1 flex-direction-column">
                             <span class="options-label-text">AI Image Generator</span>
                             <div class="input-with-button">
-                                <input type="text" class="input-field no-border" id="aiPromptInput" placeholder="Enter your Prompt here">
+                                <input type="text" class="input-field no-border" id="aiPromptInput" placeholder="Enter your search query">
                                 <button id="generateImageBtn" class="btn-1">Generate</button>
                             </div>
                         </div>
@@ -71,41 +82,7 @@
                         
                     </div>
                     <div class="creator-options-sub" id="bulletPointsContainer">
-                        <div class="creator-option-1 flex-direction-column bullet-point">
-                            <span class="options-label-text">Bullet Point</span>
-                            <div class="input-with-delete">
-                                <input type="text" class="input-field bullet-input" placeholder="Bullet Points">
-                                <img class="delete-bullet" src="img/delete.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="creator-option-1 flex-direction-column bullet-point">
-                            <span class="options-label-text">Bullet Point</span>
-                            <div class="input-with-delete">
-                                <input type="text" class="input-field bullet-input" placeholder="Bullet Points">
-                                <img class="delete-bullet" src="img/delete.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="creator-option-1 flex-direction-column bullet-point">
-                            <span class="options-label-text">Bullet Point</span>
-                            <div class="input-with-delete">
-                                <input type="text" class="input-field bullet-input" placeholder="Bullet Points">
-                                <img class="delete-bullet" src="img/delete.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="creator-option-1 flex-direction-column bullet-point">
-                            <span class="options-label-text">Bullet Point</span>
-                            <div class="input-with-delete">
-                                <input type="text" class="input-field bullet-input" placeholder="Bullet Points">
-                                <img class="delete-bullet" src="img/delete.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="creator-option-1 flex-direction-column bullet-point">
-                            <span class="options-label-text">Bullet Point</span>
-                            <div class="input-with-delete">
-                                <input type="text" class="input-field bullet-input" placeholder="Bullet Points">
-                                <img class="delete-bullet" src="img/delete.svg" alt="">
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="creator-options-sub">
                         <div class="creator-option-1 flex-direction-column">
@@ -151,31 +128,14 @@
                 <div class="live-preview-main">
                     <span class="preview-text">Live Preview</span>
                     <div class="preview-image-main" id="previewContainer">
-                        <img class="preview-img" id="previewImage" src="img/Rectangle 7.png" alt="">
+                        <div style="display: flex;">
+                            <img class="preview-img" id="previewImage" src="img/Rectangle 7.png" alt="">
+                        </div>
                         <div class="img-content-main">
                             <div class="img-content-sub">
                                 <span class="heading-text" id="previewHeading">Enter your Business Name</span>
                                 <div class="bullet-points-main" id="previewBulletPoints">
-                                    <div class="bullet-points-sub">
-                                        <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                                        <span class="bullet-point-text">Bullet Points</span>
-                                    </div>
-                                    <div class="bullet-points-sub">
-                                        <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                                        <span class="bullet-point-text">Bullet Points</span>
-                                    </div>
-                                    <div class="bullet-points-sub">
-                                        <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                                        <span class="bullet-point-text">Bullet Points</span>
-                                    </div>
-                                    <div class="bullet-points-sub">
-                                        <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                                        <span class="bullet-point-text">Bullet Points</span>
-                                    </div>
-                                    <div class="bullet-points-sub">
-                                        <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                                        <span class="bullet-point-text">Bullet Points</span>
-                                    </div>
+                                    
                                 </div>
                             </div>
                             <span class="preview-footer-text" id="previewFooter">Please Follow this page for more

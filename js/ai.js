@@ -1,72 +1,118 @@
-// Replace with your Stability AI API key
-const apiKey = 'sk-CA4OhATn2gBN3go21Wk32IZRHQcAyZ7qGNKNN9Twgo63eReP';
-const apiUrl = 'https://api.stability.ai/v1/generation/stable-diffusion-v1-6/text-to-image';
+const PIXABAY_API_KEY = '40826638-5714d333bb16cf6c5efc8654d';
+let page = 1;
+let isFetching = false;
+let currentQuery = '';
 
-// Function to generate image using Stability AI
-async function generateImageWithAI(prompt) {
-    const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            text_prompts: [{ text: prompt }],
-            cfg_scale: 7,
-            width: 512,
-            height: 512,
-            steps: 30,
-            samples: 1,
-        }),
+// Function to fetch images from Pixabay
+async function fetchImages(query, append = false) {
+    if (isFetching) return;
+    isFetching = true;
+
+    try {
+        const response = await fetch(
+            `https://pixabay.com/api/?key=${PIXABAY_API_KEY}&q=${encodeURIComponent(query)}&image_type=photo&per_page=12&page=${page}`
+        );
+        const data = await response.json();
+
+        if (data.hits && data.hits.length > 0) {
+            displayImageSelectionModal(data.hits, append);
+            page++;  // Increment page number for next fetch
+        } else {
+            console.log('No more images to load.');
+        }
+    } catch (error) {
+        console.error('Error fetching images:', error);
+        alert('Failed to fetch images. Please try again.');
+    }
+
+    isFetching = false;
+}
+
+// Function to display images in the modal
+function displayImageSelectionModal(images, append = false) {
+    const modal = document.getElementById('imageSelectionModal');
+    const modalContent = document.getElementById('modalImages');
+
+    if (!append) {
+        modalContent.innerHTML = '';  // Clear previous images if not appending
+        page = 1; // Reset page count
+    }
+
+    images.forEach(image => {
+        const imgElement = document.createElement('img');
+        imgElement.src = image.webformatURL;
+        imgElement.classList.add('modal-image');
+        imgElement.addEventListener('click', () => {
+            document.getElementById('previewImage').src = image.webformatURL;
+        });
+        modalContent.appendChild(imgElement);
     });
 
-    if (!response.ok) {
-        throw new Error('Failed to generate image. Please try again.');
-    }
-
-    const data = await response.json();
-    return data.artifacts[0].base64; // Base64-encoded image
+    // Show modal
+    modal.style.display = 'block';
 }
 
-// Function to handle image upload
-function handleImageUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const previewImage = document.getElementById('previewImage');
-            previewImage.src = e.target.result;
-            previewImage.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
+// Infinite scrolling logic
+document.getElementById('modalImages').addEventListener('scroll', function () {
+    const container = this;
+    if (container.scrollTop + container.clientHeight >= container.scrollHeight - 10 && !isFetching) {
+        fetchImages(currentQuery, true); // Load more images when scrolling to the bottom
     }
-}
+});
 
-// Function to handle AI image generation
-async function handleAIImageGeneration() {
-    const prompt = document.getElementById('aiPromptInput').value; // Use AI Prompt Input field
-    if (!prompt) {
-        alert('Please enter a prompt for image generation.');
+// Generate images on button click
+document.getElementById('generateImageBtn').addEventListener('click', async () => {
+    const query = document.getElementById('aiPromptInput').value;
+    if (!query) {
+        alert('Please enter a search query.');
         return;
     }
 
-    const button = document.getElementById('generateImageBtn');
-    button.disabled = true;
-    button.textContent = 'Generating...';
+    currentQuery = query;
+    page = 1; // Reset page count
+    await fetchImages(query);
+});
 
-    try {
-        const imageUrl = await generateImageWithAI(prompt);
-        const previewImage = document.getElementById('previewImage');
-        previewImage.src = `data:image/png;base64,${imageUrl}`;
-        previewImage.style.display = 'block';
-    } catch (error) {
-        alert(error.message);
-    } finally {
-        button.disabled = false;
-        button.textContent = 'Generate';
+// Close modal when clicking outside
+document.getElementById('imageSelectionModal').addEventListener('click', (event) => {
+    if (event.target.id === 'imageSelectionModal') {
+        document.getElementById('imageSelectionModal').style.display = 'none';
     }
+});
+
+// Close modal when clicking the close button
+document.getElementById('closeModalBtn').addEventListener('click', () => {
+    document.getElementById('imageSelectionModal').style.display = 'none';
+});
+
+// Make modal draggable
+const modalContent = document.querySelector('.modal-content');
+
+let isDragging = false;
+let offsetX, offsetY;
+
+modalContent.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offsetX = e.clientX - modalContent.getBoundingClientRect().left;
+    offsetY = e.clientY - modalContent.getBoundingClientRect().top;
+    modalContent.style.cursor = 'grabbing';
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+
+    modalContent.style.left = `${e.clientX - offsetX}px`;
+    modalContent.style.top = `${e.clientY - offsetY}px`;
+});
+
+document.addEventListener('mouseup', () => {
+    isDragging = false;
+    modalContent.style.cursor = 'grab';
+});
+
+// Function to reset the page and images when switching queries
+function resetPageAndFetchImages(query) {
+    page = 1;
+    fetchImages(query);
 }
 
-// Event Listeners
-document.getElementById('imageUpload').addEventListener('change', handleImageUpload);
-document.getElementById('generateImageBtn').addEventListener('click', handleAIImageGeneration);
