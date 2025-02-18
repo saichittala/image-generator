@@ -308,7 +308,7 @@ header {
 .bullet-points-sub {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     gap: 8px;
     align-self: stretch;
 }
