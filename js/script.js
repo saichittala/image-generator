@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
             newPreviewBullet.className = 'bullet-points-sub';
             newPreviewBullet.innerHTML = `
                 <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                <span class="bullet-point-text" id="previewBulletPoints" onclick="enableEdit('previewBulletPoints')">Bullet Points</span>
+                <span class="bullet-point-text" onclick="enableEdit(this)">Bullet Points</span>
             `;
             previewBulletPoints.appendChild(newPreviewBullet);
 
@@ -162,11 +162,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    document.querySelectorAll('.bullet-point .delete-bullet').forEach(deleteBtn => {
-        deleteBtn.addEventListener('click', function () {
-            const bullet = this.closest('.bullet-point');
+    // Using event delegation for bullet point deletions
+    document.querySelector('#bulletPointsContainer').addEventListener('click', function (event) {
+        if (event.target && event.target.classList.contains('delete-bullet')) {
+            const bullet = event.target.closest('.bullet-point');
+            const previewBullet = document.querySelector(`#previewBulletPoints .bullet-points-sub[data-bullet-id="${bullet.dataset.id}"]`);
             if (bullet) bullet.remove();
-            document.querySelector('#previewBulletPoints .bullet-points-sub:first-child')?.remove();
-        });
+            if (previewBullet) previewBullet.remove();
+        }
     });
 });
+
+

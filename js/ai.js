@@ -10,7 +10,7 @@ async function fetchImages(query, append = false) {
 
     try {
         const response = await fetch(
-            `https://pixabay.com/api/?key=${PIXABAY_API_KEY}&q=${encodeURIComponent(query)}&image_type=photo&per_page=12&page=${page}`
+            `https://pixabay.com/api/?key=${PIXABAY_API_KEY}&q=${encodeURIComponent(query)}&image_type=photo&per_page=64&page=${page}`
         );
         const data = await response.json();
 
@@ -141,5 +141,4 @@ function enableEdit(elementId) {
         }
     });
 }
-
 
