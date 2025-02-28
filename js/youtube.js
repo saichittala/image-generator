@@ -1,34 +1,30 @@
-const CLIENT_ID = "459494761850-33ni1civ148l601a3n7d252rg4u0cuq2.apps.googleusercontent.com"; // Replace with your OAuth Client ID
+const CLIENT_ID = "459494761850-33ni1civ148l601a3n7d252rg4u0cuq2.apps.googleusercontent.com"; // ✅ Replace with your actual OAuth Client ID
+const API_KEY = "AIzaSyA_A6GQbVBbp8WNppr7rhCXUe4ekkNEiqA"; // ✅ Replace with your actual API Key
 const SCOPES = "https://www.googleapis.com/auth/youtube.upload";
+
 let accessToken = null;
-let tokenClient;
 
 // ✅ Load YouTube API
 function loadYouTubeAPI() {
-    gapi.load("client", () => {
-        gapi.client.load("youtube", "v3", () => {
-            console.log("YouTube API Loaded!");
+    gapi.load("client:auth2", () => {
+        gapi.client.init({
+            apiKey: API_KEY,
+            clientId: CLIENT_ID,
+            discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"],
+            scope: SCOPES
+        }).then(() => {
+            console.log("✅ YouTube API Loaded!");
             loadUploadedVideos();
-        });
+        }).catch(error => console.error("❌ API Load Failed", error));
     });
 }
 
 // ✅ Authenticate User
 function authenticate() {
-    tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: CLIENT_ID,
-        scope: SCOPES,
-        callback: (response) => {
-            if (response.error) {
-                console.error("Authentication failed", response);
-                return;
-            }
-            accessToken = response.access_token;
-            console.log("Authenticated Successfully!");
-        }
-    });
-
-    tokenClient.requestAccessToken();
+    gapi.auth2.getAuthInstance().signIn().then(user => {
+        accessToken = user.getAuthResponse().access_token;
+        console.log("✅ Authenticated Successfully!", accessToken);
+    }).catch(error => console.error("❌ Authentication failed", error));
 }
 
 // ✅ Handle Upload
@@ -49,12 +45,10 @@ document.getElementById("upload").addEventListener("click", () => {
         return;
     }
 
-    if (scheduleTime) {
-        const uploadTime = new Date(scheduleTime).toISOString();
-        uploadVideo(fileInput, title, description, tags, "private", uploadTime);
-    } else {
-        uploadVideo(fileInput, title, description, tags, "public");
-    }
+    const privacyStatus = scheduleTime ? "private" : "public";
+    const uploadTime = scheduleTime ? new Date(scheduleTime).toISOString() : null;
+
+    uploadVideo(fileInput, title, description, tags, privacyStatus, uploadTime);
 });
 
 // ✅ Upload Video with Progress Tracking
@@ -82,7 +76,8 @@ function uploadVideo(file, title, description, tags, privacyStatus, publishTime 
     fetch("https://www.googleapis.com/upload/youtube/v3/videos?part=snippet,status", {
         method: "POST",
         headers: {
-            "Authorization": `Bearer ${accessToken}`
+            "Authorization": `Bearer ${accessToken}`,
+            "Accept": "application/json"
         },
         body: formData
     })
@@ -145,5 +140,6 @@ function deleteVideo(index) {
     loadUploadedVideos();
 }
 
+// ✅ Attach Event Listeners
 document.getElementById("login").addEventListener("click", authenticate);
 window.onload = loadYouTubeAPI;
