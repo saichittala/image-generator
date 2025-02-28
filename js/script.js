@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
             newPreviewBullet.className = 'bullet-points-sub';
             newPreviewBullet.innerHTML = `
                 <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                <span class="bullet-point-text" onclick="enableEdit(this)">Bullet Points</span>
+                <span class="bullet-point-text" onclick="enableEdit('bulletpointscontainer')">Bullet Points</span>
             `;
             previewBulletPoints.appendChild(newPreviewBullet);
 
@@ -56,14 +56,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const toggleCheckboxesBtn = document.getElementById('toggleCheckboxesBtn');
+
     if (toggleCheckboxesBtn) {
         toggleCheckboxesBtn.addEventListener('click', function () {
             document.querySelectorAll('.checkbox-icon').forEach(checkbox => {
-                checkbox.style.display = checkbox.style.display === 'none' ? 'inline-block' : 'none';
+                checkbox.classList.toggle('visible');
             });
         });
     }
-
+    
     function updateText(inputId, previewId, defaultText) {
         const input = document.getElementById(inputId);
         const preview = document.getElementById(previewId);
@@ -125,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 height: targetHeight * qualityScale,
                 scale: qualityScale,
                 useCORS: true,
+                willReadFrequently: true,
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'Generated-IMG.png';
@@ -173,4 +175,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+function updatePreviewImage(imageSrc) {
+    const previewImage = document.getElementById("previewImage");
+    const imgContainer = document.querySelector(".img-container-div");
 
+    if (previewImage) {
+        previewImage.src = imageSrc;
+    }
+    
+    if (imgContainer) {
+        imgContainer.style.backgroundImage = `url('${imageSrc}')`;
+        imgContainer.style.backgroundSize = "cover";  // Ensure full coverage
+        imgContainer.style.backgroundPosition = "center"; // Center the image
+        imgContainer.style.backgroundRepeat = "no-repeat";
+    }
+}
+
+// Handle Image Upload
+document.getElementById("imageUpload").addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            updatePreviewImage(e.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+});

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Upload</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Upload Video to YouTube</h2>
+        
+        <button id="login" class="btn">Login with Google</button>
+        
+        <input type="file" id="videoFile" accept="video/*"><br>
+        <input type="text" id="videoTitle" placeholder="Video Title"><br>
+        <textarea id="videoDescription" placeholder="Video Description"></textarea><br>
+        <input type="text" id="videoTags" placeholder="Tags (comma-separated)"><br>
+        <input type="datetime-local" id="scheduleTime"><br>
+        
+        <button id="upload" class="btn upload-btn">Upload Video</button>
+        
+        <!-- Progress Indicator -->
+        <div id="progress-container" class="hidden">
+            <p>Upload Progress: <span id="progress-text">0%</span></p>
+            <progress id="progress-bar" value="0" max="100"></progress>
+        </div>
+        
+        <h3>Uploaded Videos</h3>
+        <ul id="videoList"></ul>
+    </div>
+    
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/youtube.js"></script>
+</body>
+</html>
+
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 50%;
+    margin: auto;
+}
+
+input, textarea {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn {
+    background-color: #ff0000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #cc0000;
+}
+
+.upload-btn {
+    background-color: #4CAF50;
+}
+
+.upload-btn:hover {
+    background-color: #45a049;
+}
+
+/* Progress Bar */
+#progress-container {
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Uploaded Video List */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: white;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.delete-btn:hover {
+    background: darkred;
+}
+
+</style>

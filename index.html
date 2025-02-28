@@ -6,32 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Generator</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/ig-layout.css">
     <link rel="icon" href="img/favicon.svg" type="image/x-icon">
 </head>
 
 <body>
-<!-- Image Selection Modal -->
-<div id="imageSelectionModal" class="modal">
-    <img class="close-modal" src="img/close.svg" alt="Close"
-        onclick="document.getElementById('imageSelectionModal').style.display='none'">
-    <div class="modal-content">
-        <div style="display: flex; flex-direction: column; align-items: flex-start;">
-            <span style="margin-bottom:14px; font-size: 20px; font-weight: 600;">Generated Images</span>
-            <div class="options-div" style="margin-bottom: 18px;">
-                <button id="pixabayBtn" class="image-source-btn active">Pixabay</button>
-                <button id="unsplashBtn" class="image-source-btn">Unsplash</button>
+    <!-- Image Selection Modal -->
+    <div id="imageSelectionModal" class="modal">
+
+        <div class="modal-content" id="draggableModal">
+            <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 12px;">
+                    <span style=" font-size: 20px; font-weight: 600;">Generated Images</span>
+                    <img class="close-modal" src="img/close.svg" alt="Close"
+                        onclick="document.getElementById('imageSelectionModal').style.display='none'">
+                </div>
+                <div class="input-with-button" style="margin-bottom: 14px;">
+                    <input type="text" class="input-field no-border" id="modalSearchInput" placeholder="Search images">
+                    <button id="modalSearchBtn" class="btn-3" style="margin: 4px; border-radius: 8px;">Search</button>
+                </div>
+                <div class="options-div" style="margin-bottom: 18px;">
+                    <button id="pixabayBtn" class="image-source-btn active">Pixabay</button>
+                    <button id="unsplashBtn" class="image-source-btn">Unsplash</button>
+                    <button id="pexelsBtn" class="image-source-btn">Pexels</button>
+                </div>
+            </div>
+            <div id="modalImages" class="modal-images-container"></div>
+            <div class="options-div" style="margin-top: 12px;">
+                <button class="active-option" style="outline: none !important; border: none !important;"
+                    id="loadMoreBtn" style="display: none; margin-top: 10px;">Load More</button>
+                <!-- Load More Button -->
             </div>
         </div>
-        <div id="modalImages" class="modal-images-container"></div>
-        <div class="options-div" style="margin-top: 12px;">
-            <button class="active-option" style="outline: none !important; border: none !important;" id="loadMoreBtn" style="display: none; margin-top: 10px;">Load More</button> <!-- Load More Button -->
-        </div>
     </div>
-</div>
 
     <header>
         <div class="header-main">
-            <img class="logo" src="img/logo.png" alt="">
+            <a href="ig-layout.html">
+                <img  class="logo" src="img/logo.png" alt="">
+
+            </a>
             <!-- <a class="btn-2">Multiple Images </a> -->
             <a class="btn-1" href="multi-images.html">Multiple-Images</a>
         </div>
@@ -85,49 +100,15 @@
 
 
 
-                        <!-- <div class="creator-option-1 flex-direction-column">
+                        <div class="creator-option-1 flex-direction-column">
                             <span class="options-label-text">Enter Heading Text</span>
                             <input type="text" class="input-field" id="headingInput"
                                 placeholder="Enter your Business Idea">
-                        </div> -->
+                        </div>
 
                     </div>
                     <div class="creator-options-sub" id="bulletPointsContainer">
-                        <div class="creator-option-1 bullet-point">
-                            <span class="options-label-text">Bullet Point</span>
-                            <div class="input-with-delete">
-                                <input type="text" class="input-field bullet-input" placeholder="Enter your text here">
-                                <img class="delete-bullet" src="img/delete.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="creator-option-1 bullet-point">
-                            <span class="options-label-text">Bullet Point</span>
-                            <div class="input-with-delete">
-                                <input type="text" class="input-field bullet-input" placeholder="Enter your text here">
-                                <img class="delete-bullet" src="img/delete.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="creator-option-1 bullet-point">
-                            <span class="options-label-text">Bullet Point</span>
-                            <div class="input-with-delete">
-                                <input type="text" class="input-field bullet-input" placeholder="Enter your text here">
-                                <img class="delete-bullet" src="img/delete.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="creator-option-1 bullet-point">
-                            <span class="options-label-text">Bullet Point</span>
-                            <div class="input-with-delete">
-                                <input type="text" class="input-field bullet-input" placeholder="Enter your text here">
-                                <img class="delete-bullet" src="img/delete.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="creator-option-1 bullet-point">
-                            <span class="options-label-text">Bullet Point</span>
-                            <div class="input-with-delete">
-                                <input type="text" class="input-field bullet-input" placeholder="Enter your text here">
-                                <img class="delete-bullet" src="img/delete.svg" alt="">
-                            </div>
-                        </div>
+
                     </div>
                     <div class="creator-options-sub">
                         <div class="creator-option-1 flex-direction-column">
@@ -176,44 +157,21 @@
                         <div style="display: flex;">
                             <img class="preview-img" id="previewImage" src="img/Rectangle 7.png" alt="">
                         </div>
-                        <div class="img-content-main">
-                            <div class="img-content-sub">
-                                <span class="heading-text" id="previewHeading"
-                                    onclick="enableEdit('previewHeading')">Enter your Business Name</span>
-                                <div class="bullet-points-main" id="previewBulletPoints">
+                        <div class="img-container-div">
+                            <div class="img-content-main">
+                                <div class="img-content-sub">
+                                    <span class="heading-text" id="previewHeading"
+                                        onclick="enableEdit('previewHeading')">Enter your Business Name</span>
                                     <div class="bullet-points-main" id="previewBulletPoints">
-                                        <div class="bullet-points-sub">
-                                            <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                                            <span class="bullet-point-text" id="previewBulletPoints"
-                                                onclick="enableEdit('previewBulletPoints')">Bullet Points</span>
-                                        </div>
-                                        <div class="bullet-points-sub">
-                                            <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                                            <span class="bullet-point-text" id="previewBulletPoints"
-                                                onclick="enableEdit('previewBulletPoints')">Bullet Points</span>
-                                        </div>
-                                        <div class="bullet-points-sub">
-                                            <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                                            <span class="bullet-point-text" id="previewBulletPoints"
-                                                onclick="enableEdit('previewBulletPoints')">Bullet Points</span>
-                                        </div>
-                                        <div class="bullet-points-sub">
-                                            <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                                            <span class="bullet-point-text" id="previewBulletPoints"
-                                                onclick="enableEdit('previewBulletPoints')">Bullet Points</span>
-                                        </div>
-                                        <div class="bullet-points-sub">
-                                            <img src="img/checkbox-bullet.svg" alt="" class="checkbox-icon">
-                                            <span class="bullet-point-text" id="previewBulletPoints"
-                                                onclick="enableEdit('previewBulletPoints')">Bullet Points</span>
-                                        </div>
+
                                     </div>
                                 </div>
+                                <span class="preview-footer-text" id="previewFooter"
+                                    onclick="enableEdit('previewFooter')">Please Follow this page for more
+                                    content</span>
                             </div>
-                            <span class="preview-footer-text" id="previewFooter"
-                                onclick="enableEdit('previewFooter')">Please Follow this page for more
-                                content</span>
                         </div>
+
                     </div>
 
                 </div>
@@ -232,6 +190,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/ai.js"></script>
+    <script src="js/draggable.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Google Map - Ameerpet</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        function initMap() {
+            var mapOptions = {
+                center: { lat: 17.4369, lng: 78.4485 }, // Ameerpet, Hyderabad
+                zoom: 15,
+                styles: [
+                    {
+                        "featureType": "all",
+                        "elementType": "geometry",
+                        "stylers": [{ "color": "#202c3e" }]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "geometry",
+                        "stylers": [{ "color": "#1f2835" }]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "geometry",
+                        "stylers": [{ "color": "#0e1626" }]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "geometry",
+                        "stylers": [{ "color": "#25334e" }]
+                    }
+                ]
+            };
+
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+            // Marker for Ameerpet
+            var marker = new google.maps.Marker({
+                position: { lat: 17.4369, lng: 78.4485 },
+                map: map,
+                title: "Ameerpet, Hyderabad"
+            });
+        }
+    </script>
+</body>
+</html>
