@@ -2,10 +2,7 @@ const CLIENT_ID = "459494761850-33ni1civ148l601a3n7d252rg4u0cuq2.apps.googleuser
 const API_KEY = "AIzaSyA_A6GQbVBbp8WNppr7rhCXUe4ekkNEiqA"; // ✅ Replace with your actual API Key
 const SCOPES = "https://www.googleapis.com/auth/youtube.upload";
 
-let accessToken = null;
-
-// ✅ Load YouTube API
-function loadYouTubeAPI() {
+function initClient() {
     gapi.load("client:auth2", () => {
         gapi.client.init({
             apiKey: API_KEY,
@@ -13,133 +10,95 @@ function loadYouTubeAPI() {
             discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"],
             scope: SCOPES
         }).then(() => {
-            console.log("✅ YouTube API Loaded!");
-            loadUploadedVideos();
-        }).catch(error => console.error("❌ API Load Failed", error));
+            gapi.auth2.init({ client_id: CLIENT_ID }).then(() => {
+                console.log("✅ API Initialized");
+                checkAuthState();
+            });
+        }).catch(error => {
+            console.error("❌ Initialization Error:", error);
+            showError("Failed to initialize YouTube API.");
+        });
     });
 }
 
-// ✅ Authenticate User
-function authenticate() {
-    gapi.auth2.getAuthInstance().signIn().then(user => {
-        accessToken = user.getAuthResponse().access_token;
-        console.log("✅ Authenticated Successfully!", accessToken);
-    }).catch(error => console.error("❌ Authentication failed", error));
+function checkAuthState() {
+    const auth = gapi.auth2.getAuthInstance();
+    if (auth.isSignedIn.get()) {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("logout").classList.remove("hidden");
+        document.getElementById("upload").disabled = false;
+    } else {
+        document.getElementById("login").classList.remove("hidden");
+        document.getElementById("logout").classList.add("hidden");
+        document.getElementById("upload").disabled = true;
+    }
 }
 
-// ✅ Handle Upload
-document.getElementById("upload").addEventListener("click", () => {
-    const fileInput = document.getElementById("videoFile").files[0];
-    const title = document.getElementById("videoTitle").value || "Untitled Video";
-    const description = document.getElementById("videoDescription").value || "No Description";
+function authenticate() {
+    gapi.auth2.getAuthInstance().signIn().then(() => {
+        console.log("✅ Logged in");
+        checkAuthState();
+    }).catch(error => {
+        console.error("❌ Auth Error", error);
+        showError("Authentication failed.");
+    });
+}
+
+function logout() {
+    gapi.auth2.getAuthInstance().signOut().then(() => {
+        console.log("✅ Logged out");
+        checkAuthState();
+    });
+}
+
+document.getElementById("login").addEventListener("click", authenticate);
+document.getElementById("logout").addEventListener("click", logout);
+gapi.load("client:auth2", initClient);
+
+function uploadVideo() {
+    const file = document.getElementById("videoFile").files[0];
+    if (!file) {
+        showError("Please select a video file.");
+        return;
+    }
+
+    const title = document.getElementById("videoTitle").value || "Untitled";
+    const description = document.getElementById("videoDescription").value || "";
     const tags = document.getElementById("videoTags").value.split(",").map(tag => tag.trim());
-    const scheduleTime = document.getElementById("scheduleTime").value;
+    const privacyStatus = document.getElementById("scheduleTime").value ? "private" : "public";
+    const publishTime = document.getElementById("scheduleTime").value || null;
 
-    if (!fileInput) {
-        alert("Please select a video file.");
-        return;
-    }
-
-    if (!accessToken) {
-        alert("Please log in first.");
-        return;
-    }
-
-    const privacyStatus = scheduleTime ? "private" : "public";
-    const uploadTime = scheduleTime ? new Date(scheduleTime).toISOString() : null;
-
-    uploadVideo(fileInput, title, description, tags, privacyStatus, uploadTime);
-});
-
-// ✅ Upload Video with Progress Tracking
-function uploadVideo(file, title, description, tags, privacyStatus, publishTime = null) {
     const metadata = {
-        snippet: {
-            title: title,
-            description: description,
-            tags: tags,
-            categoryId: "22"
-        },
-        status: {
-            privacyStatus: privacyStatus,
-            publishAt: publishTime // Only works for "private" videos
-        }
+        snippet: { title, description, tags, categoryId: "22" },
+        status: { privacyStatus, publishAt: publishTime }
     };
 
-    const formData = new FormData();
-    formData.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
-    formData.append("file", file);
+    document.getElementById("progress-container").classList.remove("hidden");
+    updateProgress(0);
 
-    // Show progress bar
-    document.getElementById("progress-container").style.display = "block";
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const blob = new Blob([e.target.result], { type: file.type });
 
-    fetch("https://www.googleapis.com/upload/youtube/v3/videos?part=snippet,status", {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${accessToken}`,
-            "Accept": "application/json"
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.id) {
-            console.log("✅ Upload Successful! Video ID:", data.id);
-            saveVideoData(title, data.id);
+        gapi.client.request({
+            path: "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status",
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(metadata)
+        }).then(response => {
+            const uploadUrl = response.headers.Location;
+            return fetch(uploadUrl, { method: "PUT", headers: { "Content-Type": file.type }, body: blob });
+        }).then(() => {
             updateProgress(100);
-        } else {
-            console.error("❌ Upload failed", data);
-        }
-    })
-    .catch(error => {
-        console.error("❌ Upload failed", error);
-        updateProgress(0);
-    });
+            document.getElementById("progress-container").classList.add("hidden");
+            console.log("✅ Upload Success");
+        }).catch(error => showError("Upload failed: " + error.message));
+    };
 
-    let progress = 0;
-    const interval = setInterval(() => {
-        progress += 10;
-        if (progress >= 90) clearInterval(interval);
-        updateProgress(progress);
-    }, 500);
+    reader.readAsArrayBuffer(file);
 }
 
-// ✅ Update Progress Bar
-function updateProgress(value) {
-    document.getElementById("progress-bar").value = value;
-    document.getElementById("progress-text").innerText = `${value}%`;
-}
-
-// ✅ Save Uploaded Video Info
-function saveVideoData(title, videoId) {
-    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    const videos = JSON.parse(localStorage.getItem("uploadedVideos")) || [];
-    videos.push({ title, url: videoUrl });
-    localStorage.setItem("uploadedVideos", JSON.stringify(videos));
-    loadUploadedVideos();
-}
-
-// ✅ Load & Delete Uploaded Videos
-function loadUploadedVideos() {
-    const videoList = document.getElementById("videoList");
-    videoList.innerHTML = "";
-    const videos = JSON.parse(localStorage.getItem("uploadedVideos")) || [];
-
-    videos.forEach((video, index) => {
-        const listItem = document.createElement("li");
-        listItem.innerHTML = `<a href="${video.url}" target="_blank">${video.title}</a>
-                              <button class="delete-btn" onclick="deleteVideo(${index})">🗑</button>`;
-        videoList.appendChild(listItem);
-    });
-}
-
-function deleteVideo(index) {
-    const videos = JSON.parse(localStorage.getItem("uploadedVideos")) || [];
-    videos.splice(index, 1);
-    localStorage.setItem("uploadedVideos", JSON.stringify(videos));
-    loadUploadedVideos();
-}
-
-// ✅ Attach Event Listeners
-document.getElementById("login").addEventListener("click", authenticate);
-window.onload = loadYouTubeAPI;
+document.getElementById("upload").addEventListener("click", uploadVideo);
