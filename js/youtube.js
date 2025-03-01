@@ -102,3 +102,14 @@ function uploadVideo() {
 }
 
 document.getElementById("upload").addEventListener("click", uploadVideo);
+
+function updateProgress(percentage) {
+    document.getElementById("progress-text").textContent = `${percentage}%`;
+    document.getElementById("progress-bar").value = percentage;
+}
+
+function showError(message) {
+    const errorDiv = document.getElementById("error-message");
+    errorDiv.textContent = message;
+    errorDiv.classList.remove("hidden");
+}
